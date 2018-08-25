@@ -1,4 +1,4 @@
-package ch13
+package main
 
 import (
 	"bufio"
