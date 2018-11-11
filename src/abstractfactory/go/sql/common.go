@@ -1,5 +1,7 @@
 package sql
 
+const DB = "SqlServer"
+
 type IUser interface {
 	Insert(u *User)
 	GetUser(i int) (u *User)
@@ -20,7 +22,7 @@ type DataAccess struct {
 }
 
 func NewDataAccess() *DataAccess{
-	db := "SqlServer"
+	db := DB
 	//db := "Access"
 	return &DataAccess{DB: db}
 }
