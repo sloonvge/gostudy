@@ -2,17 +2,12 @@ package dec
 
 import "fmt"
 
-type IShow interface {
+type IClothes interface {
 	Show()
 }
 
 type Person struct {
 	Name string
-}
-
-func NewBlankPerson() (p *Person){
-	p = &Person{}
-	return
 }
 
 func NewPerson(name string) (p *Person) {

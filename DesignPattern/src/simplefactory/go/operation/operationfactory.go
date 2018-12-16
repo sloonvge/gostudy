@@ -6,7 +6,7 @@ func CreatOperate(opExpr string) (op Operate) {
 	case "+":
 		op = NewOperationAdd()
 	case "-":
-		op = NewOperationMul()
+		op = NewOperationSub()
 	case "*":
 		op = NewOperationMul()
 	case "/":

@@ -2,42 +2,38 @@ package dec
 
 import "fmt"
 
-type Finery struct {
-	Person
-	Component *Person
-}
-
-func NewFinery() (f *Finery){
-	f = &Finery{}
-	return
-}
-
-func (f *Finery) Decorate(p *Person) {
-	f.Component = p
-}
-
-func (f *Finery) Show() {
-	if f.Component != nil {
-		f.Component.Show()
-	}
-}
-
-
 type TShirts struct {
-	Finery
+	Clothes IClothes
 }
 
-func NewTShirts() (t *TShirts) {
-	t = &TShirts{}
+func NewTShirts(c IClothes) (t *TShirts) {
+	t = &TShirts{Clothes: c}
 	return
 }
 
-func (t *TShirts) Decorate(f *Finery) {
-	t.Component = f.Component
+func (t *TShirts) Decorate(c IClothes) {
+	t.Clothes = c
 }
 
 func (t *TShirts) Show() {
 	fmt.Println("T shirts")
-	t.Component.Show()
+	t.Clothes.Show()
 }
 
+type BigTrouser struct {
+	Clothes IClothes
+}
+
+func NewBigTruser(c IClothes) (b *BigTrouser) {
+	b = &BigTrouser{Clothes: c}
+	return
+}
+
+func (b *BigTrouser) Decorate(c IClothes) {
+	b.Clothes = c
+}
+
+func (b *BigTrouser) Show() {
+	fmt.Println("Big triuser!")
+	b.Clothes.Show()
+}
