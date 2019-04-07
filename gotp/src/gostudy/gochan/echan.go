@@ -1,6 +1,5 @@
 package main
 
-import "fmt"
 
 func getIntChan() <-chan int {
 	num := 5
@@ -12,12 +11,12 @@ func getIntChan() <-chan int {
 	return ch
 }
 
-func main() {
-	intChan := getIntChan()
-	//fmt.Printf("%v\n", intChan)
-	fmt.Printf("%T\n", intChan)
-	for v := range intChan {
-		fmt.Printf("%v\n", v)
-	}
-}
+//func main() {
+//	intChan := getIntChan()
+//	//fmt.Printf("%v\n", intChan)
+//	fmt.Printf("%T\n", intChan)
+//	for v := range intChan {
+//		fmt.Printf("%v\n", v)
+//	}
+//}
 
