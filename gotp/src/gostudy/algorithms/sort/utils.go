@@ -1,4 +1,4 @@
-package gostudy
+package sort
 
 import "fmt"
 
@@ -8,4 +8,12 @@ import "fmt"
 
 func Show(a []int) {
 	fmt.Printf("%v\n", a)
+}
+
+func min(a int, b int) int {
+	if a < b {
+		return a
+	} else {
+		return b
+	}
 }

@@ -22,12 +22,11 @@ var m, n int
 var A = [][]int{
 	{2, 5, 1},
 	{4, 6, 7},
-	{6, 9, 2},
 }
 
 func Init() {
 	m = 3
-	n = 3
+	n = 2
 	dp := make([][]int, m)
 	for i := 0; i < m; i++ {
 		dp =append(dp, make([]int, n))
@@ -46,18 +45,18 @@ func max(x int, y int) int {
 
 func TestGrid(t *testing.T) {
 	// Init()
+	n = 2
 	m = 3
-	n = 3
-	dp := make([][]int, m)
-	for i := 0; i < m; i++ {
+	dp := make([][]int, n)
+	for i := 0; i < n; i++ {
 		if dp[i] == nil {
-			dp[i] = make([]int, n)
+			dp[i] = make([]int, m)
 		}
 	}
 
 	dp[0][0] = A[0][0]
 	for i := 0; i < n; i++ {
-		for j := 0; j < n; j++ {
+		for j := 0; j < m; j++ {
 			if i == 0 && j == 0 {
 				continue
 			}
