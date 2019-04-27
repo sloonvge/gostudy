@@ -1,5 +1,6 @@
 package main
 
+// <<<<<<< Updated upstream
 import (
 	"fmt"
 )
@@ -29,3 +30,36 @@ func main() {
 	fmt.Println(k + ans)
 
 }
+// =======
+// import "fmt"
+//
+// /**
+// * Created by wanjx in 2019/4/14 11:16
+// **/
+//
+// func main() {
+// 	n := 0
+// 	fmt.Scan(&n)
+//
+// 	vals := make([]int, n)
+// 	for i := 0; i < n; i++ {
+// 		x := 0
+// 		fmt.Scan(&x)
+//
+// 		vals[i] = x
+// 	}
+//
+// 	fmt.Println(q3(vals))
+// }
+//
+//
+// func q3(values []int) int{
+// 	ans := 0
+// 	values[0] = 0
+// 	for i := 0; i < len(values) - 1; i++ {
+// 		ans += - values[i + 1] + values[i]
+// 	}
+//
+// 	return  -ans
+// }
+// >>>>>>> Stashed changes
