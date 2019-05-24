@@ -38,7 +38,6 @@ func partition(a []int, lo int, hi int) int {
 	for  {
 		fmt.Printf("+++%d %d\n", i, a[i])
 		for ;a[i] <= v; i++ {
-
 			if i == hi {
 				break
 			}
