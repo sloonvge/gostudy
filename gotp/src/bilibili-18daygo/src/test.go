@@ -9,5 +9,4 @@ func main() {
 	ch <- 1
 	a :=<- ch
 	fmt.Println(a)
-	
 }
