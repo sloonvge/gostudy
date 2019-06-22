@@ -12,6 +12,7 @@ func isPrime(n int) bool {
 	for i := 2; i < n; i++ {
 		if n % i == 0 {
 			prime =  false
+			break
 		}
 	}
 	return prime
@@ -31,18 +32,13 @@ func isNarcissistic(n int) bool {
 	return false
 }
 
-func factorial(n int) int {
-	var result = 1
-	for i := 1; i < n + 1; i++ {
-		result *= i
-	}
-	return result
-}
 
 func factorialSum(n int) int {
 	var result int
+	var factorial = 1
 	for i := 1; i < n + 1; i++ {
-		result += factorial(i)
+		factorial = factorial * i
+		result += factorial
 	}
 	return result
 }
