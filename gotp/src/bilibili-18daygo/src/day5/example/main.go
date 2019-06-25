@@ -35,36 +35,10 @@ func (s1 songLianxu) show() {
 	fmt.Printf("%p\n", &s1.tim)
 }
 
-type songLinked struct {
-	title string
-	time int
-	next *songLinked
-}
-
-func linkedList() {
-	head  := &songLinked{}
-	head.title = "song"
-	head.time = 10
-
-	for i := 0; i < 10; i++ {
-		s := &songLinked{
-			title: fmt.Sprintf("song%d", i),
-			time: rand.Intn(100),
-		}
-		
-		head.next = s
-		s.next = head
-		
-		fmt.Println(s)
-	}
-}
-
 func main() {
 	// s1:= new(song)
 	// s1.show()
 
 	// s2 := new(songLianxu)
 	// s2.show()
-	linkedList()
-
 }
