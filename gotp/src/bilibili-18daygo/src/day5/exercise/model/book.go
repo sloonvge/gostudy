@@ -1,15 +1,48 @@
-package library
+package model
 
 import (
+	"errors"
 	"fmt"
+)
+
+var (
+	ErrStockNotEnough = errors.New("stock is not enough")
 )
 
 type Book struct {
 	Name string
-	Copy int
+	Total int
 	Author string
 	Publication string
 	WhoBorrow []*Student
+}
+
+func CreateBook(name string, total int, author string, publication string) (b *Book) {
+	b = &Book{
+		Name: name,
+		Total: total,
+		Author: author,
+		Publication: publication,
+	}
+	return
+}
+
+func (b *Book) canBorrow(c int) bool {
+	return b.Total >= c
+}
+
+func (b *Book) Borrow(c int) (err error){
+	if b.canBorrow(c) {
+		err = ErrStockNotEnough
+		return
+	}
+	b.Total -= c
+	return
+}
+
+func (b *Book) Back(c int) (err error) {
+	b.Total += c
+	return
 }
 
 type Library []*Book

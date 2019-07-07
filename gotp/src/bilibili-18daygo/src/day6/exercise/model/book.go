@@ -1,15 +1,51 @@
-package library
+package model
 
 import (
+	"sort"
+	"errors"
 	"fmt"
+)
+
+var (
+	ErrStockNotEnough = errors.New("stock is not enough")
 )
 
 type Book struct {
 	Name string
-	Copy int
+	Total int
 	Author string
 	Publication string
 	WhoBorrow []*Student
+	BorrowTime int
+}
+
+func CreateBook(name string, total int, author string, publication string) (b *Book) {
+	b = &Book{
+		Name: name,
+		Total: total,
+		Author: author,
+		Publication: publication,
+	}
+	return
+}
+
+func (b *Book) canBorrow(c int) bool {
+	return b.Total >= c
+}
+
+func (b *Book) Borrow(c int) (err error){
+	if b.canBorrow(c) {
+		err = ErrStockNotEnough
+		return
+	}
+	b.Total -= c
+	b.BorrowTime += c
+	return
+}
+
+func (b *Book) Back(c int) (err error) {
+	b.Total += c
+	return
 }
 
 type Library []*Book
@@ -66,4 +102,24 @@ func (l Library) String() string {
 func (b Book) BorrowBy() []*Student {
 	return b.WhoBorrow
 }
+
+func (l Library) HotBook() (res []*Book) {
+	copy(res, l)
+	sort.Sort(Library(res))
+	return res[:10]
+}
+
+func (l Library) Less(a, b int) bool {
+	return l[a].BorrowTime < l[b].BorrowTime
+}
+
+func (l Library) Len() int {
+	return len(l)
+}
+
+func (l Library) Swap(a, b int) {
+	l[a], l[b] = l[b], l[a]
+}
+
+
 
