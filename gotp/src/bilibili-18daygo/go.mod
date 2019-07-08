@@ -1,3 +1,3 @@
 module bilibili-18daygo
 
-go 1.12
+go 1.11
