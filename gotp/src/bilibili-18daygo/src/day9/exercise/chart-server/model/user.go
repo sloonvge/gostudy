@@ -6,8 +6,11 @@ const (
 )
 
 type User struct {
-	UserId int
-	Passwd string
-	Status int
-	LastLogin string
+	UserId int `json:"user_id"`
+	Passwd string `json:"passwd"`
+	Nick string	`json:"nick"`
+	Sex string `json:"sex"`
+	Header string `josn:"header"`
+	LastLogin string `json:"last_login"`
+	Status int `json:"status"`
 }

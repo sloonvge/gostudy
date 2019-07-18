@@ -22,5 +22,15 @@ func runServer(addr string) (err error) {
 }
 
 func process(conn net.Conn) {
+	defer conn.Close()
 
+	client := &Client{
+		conn: conn,
+	}
+
+	err := client.Process()
+	if err != nil {
+		fmt.Println("client process failed, err: ", err)
+		return
+	}
 }
