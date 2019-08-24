@@ -1,42 +1,40 @@
 package questions
 
 import (
-	"fmt"
-	"strings"
 	"strconv"
-	"sort"
+	"strings"
 )
 
-func main() {
-	input := ""
-	fmt.Scan(&input)
-
-	array := generateArray(input)
-	sort.Ints(array)
-
-	if !valid(array) {
-		fmt.Println("invalid")
-	} else {
-		var ans string
-		for i, x := range array {
-			if x < 3 {
-				ans += strconv.Itoa(x)
-				array = array[1:]
-			} else if x < 6 {
-				ans += strconv.Itoa(x)
-				array = array[1:]
-			} else {
-				ans += strconv.Itoa(x)
-				array = array[1:]
-			}
-			if i == 1 || i == 3{
-				ans += ":"
-			}
-		}
-
-		fmt.Println(ans)
-	}
-}
+// func main() {
+// 	input := ""
+// 	fmt.Scan(&input)
+//
+// 	array := generateArray(input)
+// 	sort.Ints(array)
+//
+// 	if !valid(array) {
+// 		fmt.Println("invalid")
+// 	} else {
+// 		var ans string
+// 		for i, x := range array {
+// 			if x < 3 {
+// 				ans += strconv.Itoa(x)
+// 				array = array[1:]
+// 			} else if x < 6 {
+// 				ans += strconv.Itoa(x)
+// 				array = array[1:]
+// 			} else {
+// 				ans += strconv.Itoa(x)
+// 				array = array[1:]
+// 			}
+// 			if i == 1 || i == 3{
+// 				ans += ":"
+// 			}
+// 		}
+//
+// 		fmt.Println(ans)
+// 	}
+// }
 
 func generateArray(s string) []int {
 	s = strings.Trim(s, "[")

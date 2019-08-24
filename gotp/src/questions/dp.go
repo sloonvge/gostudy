@@ -1,7 +1,5 @@
 package questions
 
-import "fmt"
-
 /**
 * Created by wanjx in 2019/4/5 20:45
 **/
@@ -14,13 +12,13 @@ var vals = []int{1, 2, 2, 2, 2, 1, 2}
 var dp = make(map[int]int, 0)
 var MAX int
 
-func main()  {
-
-	ma := max(wts)
-	MAX = ma
-	fmt.Println(f(MAX))
-	fmt.Printf("%v\n", dp)
-}
+// func main()  {
+//
+// 	ma := max(wts)
+// 	MAX = ma
+// 	fmt.Println(f(MAX))
+// 	fmt.Printf("%v\n", dp)
+// }
 
 func f(sum int) int{
 

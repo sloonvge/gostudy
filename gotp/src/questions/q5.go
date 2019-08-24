@@ -1,7 +1,6 @@
 package questions
 
 import (
-	"fmt"
 	"sort"
 )
 
@@ -9,31 +8,31 @@ import (
 * Created by wanjx in 2019/4/14 10:13
 **/
  
-func main() {
-	n := 0
-	fmt.Scan(&n)
-	exs := make([][]int, n)
-
-	for l := 0; l < n; l++ {
-		ln := 0
-		fmt.Scan(&ln)
-
-		lns := make([]int, ln)
-		for k := 0; k < ln; k ++ {
-			a := 0
-			fmt.Scan(&a)
-
-			lns[k] = a
-		}
-		exs[l] = lns
-	}
-
-	fmt.Printf("%v\n", exs)
-	for _, x := range exs {
-		t := q5(x)
-		fmt.Println(t)
-	}
-}
+// func main() {
+// 	n := 0
+// 	fmt.Scan(&n)
+// 	exs := make([][]int, n)
+//
+// 	for l := 0; l < n; l++ {
+// 		ln := 0
+// 		fmt.Scan(&ln)
+//
+// 		lns := make([]int, ln)
+// 		for k := 0; k < ln; k ++ {
+// 			a := 0
+// 			fmt.Scan(&a)
+//
+// 			lns[k] = a
+// 		}
+// 		exs[l] = lns
+// 	}
+//
+// 	fmt.Printf("%v\n", exs)
+// 	for _, x := range exs {
+// 		t := q5(x)
+// 		fmt.Println(t)
+// 	}
+// }
 
 func q5(exs []int) int {
 	var ans int

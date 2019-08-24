@@ -2,9 +2,9 @@ package questions
 
 import "fmt"
 
-func main() {
-	fmt.Println(climbStairs(7))
-}
+// func main() {
+// 	fmt.Println(climbStairs(7))
+// }
 
 func climbStairs(n int) int {
 

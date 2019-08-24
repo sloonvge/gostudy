@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+)
 
 /**
 * Created by wanjx in 2019/4/5 20:21
@@ -56,4 +59,19 @@ func (q *queue) Pop() string {
 	v := q.Q[n - 1]
 	q.Q = q.Q[:n - 1]
 	return v
+}
+
+func main() {
+	// input := make([][]int, 0)
+	var a string
+	for {
+		_, err := fmt.Scanf("%s", &a)
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+		} else {
+			fmt.Printf("%q %d\n",a, len(a))
+		}
+	}
 }

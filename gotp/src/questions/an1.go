@@ -1,19 +1,17 @@
 package questions
 
-import "fmt"
-
-/** 
+/**
 * Created by wanjx in 2019/4/5 20:59
 **/
 
 var coins = []int{1, 2, 5, 10}
 var dp1 = make(map[int]int, 0)
-func main()  {
-
-	fmt.Println(f1(20))
-	fmt.Printf("%v\n", dp1)
-	fmt.Println(max1(dp1))
-}
+// func main()  {
+//
+// 	fmt.Println(f1(20))
+// 	fmt.Printf("%v\n", dp1)
+// 	fmt.Println(max1(dp1))
+// }
 
 func f1(sum int) int{
 
