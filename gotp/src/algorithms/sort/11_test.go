@@ -1,4 +1,4 @@
-package offer
+package main
 
 import (
 	"fmt"
@@ -64,3 +64,5 @@ func TestSort(t *testing.T) {
 	})
 
 }
+
+
