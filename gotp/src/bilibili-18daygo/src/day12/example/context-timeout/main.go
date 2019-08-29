@@ -28,8 +28,8 @@ func main() {
 	}
 	go func() {
 		resp, err := client.Do(req)
-		pyload := res{r: resp, err:err}
-		c <- pyload
+		payload := res{r: resp, err:err}
+		c <- payload
 	}()
 	select {
 	case <-ctx.Done():
