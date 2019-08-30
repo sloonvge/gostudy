@@ -87,6 +87,63 @@ func EqualOneValue(head1, head2 *ListNode) bool {
 	return equal
 }
 
+// 18
+func DeleteNode(head *ListNode, node *ListNode) (ok bool) {
+	if head == nil || node == nil {
+		return false
+	}
+	if node.next != nil {
+		next := node.next
+		node.value = next.value
+		node.next = next.next
+		next = nil
+	} else if head == node {
+		node = nil
+		head = nil
+	} else {
+		n := head
+		for ; n.next.value != node.value;  {
+			n = n.next
+		}
+		n.next = nil
+		node = nil
+	}
+
+	return ok
+}
+
+func TestDeleteNode(t *testing.T) {
+	inputs := []*ListNode{
+		GenerateListNode([]int{1,3,5,7}),
+	}
+	helper := [][]*ListNode {
+		{
+			GenerateListNode([]int{3}),
+		},
+	}
+	wants := [][]*ListNode{
+		{
+			GenerateListNode([]int{1,5,7}),
+		},
+
+	}
+	t.Run("0", func(t *testing.T) {
+	})
+	t.Run("1", func(t *testing.T) {
+		for i := 0; i < len(inputs); i++ {
+			for j := 0; j < len(wants[i]); j++ {
+				if got := DeleteNode(inputs[i],
+					helper[i][j]); !EqualListNode(inputs[i], wants[i][j]){
+						PrintListNode(inputs[i])
+						fmt.Println()
+						PrintListNode(wants[i][j])
+					t.Fatalf("fail %d, want:%v,got:%v\n", i, wants[i][j], got)
+				}
+			}
+		}
+	})
+}
+
 // 22
 func FindKthToTail(head *ListNode, k int) *ListNode {
 	if head == nil {

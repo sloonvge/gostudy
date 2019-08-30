@@ -1,6 +1,7 @@
 package offer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -27,6 +28,24 @@ func generateBinaryTree(a []int, i *int) *BinaryTreeNode {
 	root.left = generateBinaryTree(a, i)
 	root.right = generateBinaryTree(a, i)
 	return root
+}
+
+func PrintBinaryTreeFront(root *BinaryTreeNode) {
+	if root == nil {
+		return
+	}
+	fmt.Printf("%d\n", root.value)
+	PrintBinaryTreeFront(root.left)
+	PrintBinaryTreeFront(root.right)
+}
+
+func EqualValueBinaryTree(root1, root2 *BinaryTreeNode) (equal bool){
+	if root1 == nil || root2 == nil {
+		return root1 == nil && root2 == nil
+	}
+	equal = root1.value == root2.value
+	return equal && EqualValueBinaryTree(root1.left, root2.left) &&
+		EqualValueBinaryTree(root1.right, root2.right)
 }
 
 // 26
@@ -81,5 +100,49 @@ func TestHasSubtree(t *testing.T) {
 				}
 			}
 		}
+	})
+}
+
+// 27
+func MirrorRecursively(root *BinaryTreeNode){
+	if root == nil {
+		return
+	}
+	root.left, root.right = root.right, root.left
+	MirrorRecursively(root.left)
+	MirrorRecursively(root.right)
+}
+
+func TestMirrorRecursively(t *testing.T) {
+	inputs := []*BinaryTreeNode{
+		GenerateBinaryTree([]int{8, 8, 9, 2, 4, 7, 7}),
+	}
+	wants := [][]*BinaryTreeNode{
+		{
+			GenerateBinaryTree([]int{8, 8, 9, 2, 4, 7, 7}),
+		},
+	}
+	t.Run("1", func(t *testing.T) {
+		for i := 0; i < len(inputs); i++ {
+			for j := 0; j < len(wants[i]); j++ {
+				if MirrorRecursively(inputs[i]); EqualValueBinaryTree(inputs[i], wants[i][j]) {
+					t.Fatalf("fail %d, want:%v,got:%v\n", i, wants[i][j], inputs[i])
+				}
+			}
+		}
+	})
+	t.Run("0", func(t *testing.T) {
+		a := EqualValueBinaryTree(GenerateBinaryTree([]int{8, 8, 9, 2, 4, 7, 7}),
+			GenerateBinaryTree([]int{8, 8, 9, 2, 4, 7, 7}))
+		fmt.Println(a)
+		a = EqualValueBinaryTree(GenerateBinaryTree([]int{}),
+			GenerateBinaryTree([]int{}))
+		fmt.Println(a)
+		a = EqualValueBinaryTree(GenerateBinaryTree([]int{1}),
+			GenerateBinaryTree([]int{}))
+		fmt.Println(a)
+		a = EqualValueBinaryTree(GenerateBinaryTree([]int{8, 8, 10}),
+			GenerateBinaryTree([]int{10, 8, 8}))
+		fmt.Println(a)
 	})
 }
