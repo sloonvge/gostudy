@@ -34,9 +34,25 @@ func PrintBinaryTreeFront(root *BinaryTreeNode) {
 	if root == nil {
 		return
 	}
-	fmt.Printf("%d\n", root.value)
+	fmt.Printf("%d ", root.value)
 	PrintBinaryTreeFront(root.left)
 	PrintBinaryTreeFront(root.right)
+}
+func PrintBinaryTreeMid(root *BinaryTreeNode) {
+	if root == nil {
+		return
+	}
+	PrintBinaryTreeMid(root.left)
+	fmt.Printf("%d ", root.value)
+	PrintBinaryTreeMid(root.right)
+}
+func PrintBinaryTreeEnd(root *BinaryTreeNode) {
+	if root == nil {
+		return
+	}
+	PrintBinaryTreeEnd(root.left)
+	PrintBinaryTreeEnd(root.right)
+	fmt.Printf("%d ", root.value)
 }
 
 func EqualValueBinaryTree(root1, root2 *BinaryTreeNode) (equal bool){
@@ -108,41 +124,68 @@ func MirrorRecursively(root *BinaryTreeNode){
 	if root == nil {
 		return
 	}
+	if root.left == nil && root.right == nil {
+		return
+	}
+	// temp := root.left
+	// root.left = root.right
+	// root.right = temp
 	root.left, root.right = root.right, root.left
-	MirrorRecursively(root.left)
-	MirrorRecursively(root.right)
+	if root.left != nil {
+		MirrorRecursively(root.left)
+	}
+	if root.right != nil {
+		MirrorRecursively(root.right)
+	}
 }
 
 func TestMirrorRecursively(t *testing.T) {
 	inputs := []*BinaryTreeNode{
-		GenerateBinaryTree([]int{8, 8, 9, 2, 4, 7, 7}),
+		GenerateBinaryTree([]int{8, 6, 5, 7, 10, 9, 11}),
 	}
 	wants := [][]*BinaryTreeNode{
 		{
-			GenerateBinaryTree([]int{8, 8, 9, 2, 4, 7, 7}),
+			GenerateBinaryTree([]int{8, 6, 5, 7, 10, 9, 11}),
 		},
 	}
 	t.Run("1", func(t *testing.T) {
 		for i := 0; i < len(inputs); i++ {
+			in := inputs[i]
+			PrintBinaryTreeMid(in)
+			fmt.Println()
 			for j := 0; j < len(wants[i]); j++ {
-				if MirrorRecursively(inputs[i]); EqualValueBinaryTree(inputs[i], wants[i][j]) {
-					t.Fatalf("fail %d, want:%v,got:%v\n", i, wants[i][j], inputs[i])
+				wa := wants[i][j]
+				MirrorRecursively(in)
+				if !EqualValueBinaryTree(in, wa) {
+					PrintBinaryTreeMid(in)
+					fmt.Println()
+					PrintBinaryTreeMid(wa)
+					t.Fatalf("fail %d, want:%v,got:%v\n", i, wa, in)
 				}
 			}
 		}
 	})
-	t.Run("0", func(t *testing.T) {
-		a := EqualValueBinaryTree(GenerateBinaryTree([]int{8, 8, 9, 2, 4, 7, 7}),
-			GenerateBinaryTree([]int{8, 8, 9, 2, 4, 7, 7}))
-		fmt.Println(a)
-		a = EqualValueBinaryTree(GenerateBinaryTree([]int{}),
-			GenerateBinaryTree([]int{}))
-		fmt.Println(a)
-		a = EqualValueBinaryTree(GenerateBinaryTree([]int{1}),
-			GenerateBinaryTree([]int{}))
-		fmt.Println(a)
-		a = EqualValueBinaryTree(GenerateBinaryTree([]int{8, 8, 10}),
-			GenerateBinaryTree([]int{10, 8, 8}))
-		fmt.Println(a)
+	t.Run("1", func(t *testing.T) {
+		a4 := &BinaryTreeNode{
+			value:4,
+		}
+		a3 := &BinaryTreeNode{
+			value:3,
+		}
+		a2 := &BinaryTreeNode{
+			value:2,
+			left:a4,
+		}
+		a1 := &BinaryTreeNode{
+			value:1,
+			left:a2,
+			right:a3,
+		}
+		PrintBinaryTreeFront(a1)
+		fmt.Println()
+		PrintBinaryTreeMid(a1)
+		fmt.Println()
+		PrintBinaryTreeEnd(a1)
+		fmt.Println()
 	})
 }
