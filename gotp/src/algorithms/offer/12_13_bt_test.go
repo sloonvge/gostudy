@@ -1,8 +1,28 @@
 package offer
 
 import (
+	"fmt"
 	"testing"
 )
+
+func GenerateAll(a []byte) {
+	generateAll(a, 0)
+}
+func generateAll(a []byte, pos int) {
+	if pos == 6 {
+		fmt.Println(string(a), len(a), cap(a))
+	} else {
+		a[pos] = '('
+		generateAll(a, pos + 1)
+		a[pos] = ')'
+		generateAll(a, pos + 1)
+	}
+
+}
+
+func TestGenerateAll(t *testing.T) {
+	GenerateAll(make([]byte, 6))
+}
 
 // 12
 func HasPath(mat [][]string, rows, cols int, s string) bool {
