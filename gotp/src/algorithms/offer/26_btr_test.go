@@ -189,3 +189,108 @@ func TestMirrorRecursively(t *testing.T) {
 		fmt.Println()
 	})
 }
+
+// 28
+func IsSymmetrical(root *BinaryTreeNode) bool {
+	return isSymmetrical(root, root)
+}
+func isSymmetrical(root1, root2 *BinaryTreeNode) bool {
+	if root1 == nil || root2 == nil {
+		return root1 == nil && root2 == nil
+	}
+	if root1.value != root2.value {
+		return false
+	}
+	fmt.Println(root1.value, root1.left.value, root1.right.value, root2.value)
+	return isSymmetrical(root1.left, root2.right) &&
+		isSymmetrical(root1.right, root2.left)
+}
+
+func TestIsSymmetrical(t *testing.T) {
+	inputs := []*BinaryTreeNode{
+		GenerateBinaryTree([]int{8, 6, 5, 7, 6, 7, 5}),
+	}
+	wants := [][]bool{
+		{
+			true,
+		},
+	}
+	t.Run("1", func(t *testing.T) {
+		for i := 0; i < len(inputs); i++ {
+			input := inputs[i]
+			// PrintBinaryTreeFront(input)
+			// fmt.Println()
+			for j := 0; j < len(wants[i]); j++ {
+				want := wants[i][j]
+				if got := IsSymmetrical(input); got != want {
+					t.Fatalf("fail %d, want:%v,got:%v\n", i, want, got)
+				}
+			}
+		}
+	})
+}
+
+// 29
+func MatrixClockwisely(a [][]int, rows, cols int) {
+	if len(a) == 0 || cols <= 0 || rows <= 0 {
+		return
+	}
+	start := 0
+
+	for cols > start * 2 && rows > start *2 {
+		printMatrixInCycle(a, rows, cols, start)
+		start++
+	}
+	fmt.Println()
+}
+func printMatrixInCycle(a [][]int, rows, cols, start int) {
+	endX := cols - 1 - start
+	endY := rows - 1- start
+	for i := start; i <= endX; i++ {
+		fmt.Printf("%d ", a[start][i])
+	}
+	if start < endY {
+		for i := start + 1; i <= endY; i++ {
+			fmt.Printf("%d ", a[i][endX])
+		}
+	}
+	if start < endX && start < endY {
+		for j := endX - 1; j >= start; j-- {
+			fmt.Printf("%d ", a[endY][j])
+		}
+	}
+	if start < endX && start < endY - 1 {
+		for i := endY - 1; i >= start + 1; i-- {
+			fmt.Printf("%d ", a[i][start])
+		}
+	}
+}
+
+func TestMatrixClockwisely(t *testing.T) {
+	inputs := [][][]int{
+		{
+			{1, 2, 3, 4},
+			{5, 6, 7, 8},
+			{9, 10, 11, 12},
+			{13, 14, 15, 16},
+		},
+		{
+			{1, 2, 3, 4},
+			{5, 6, 7, 8},
+			{9, 10, 11, 12},
+		},
+		{
+			{1},
+			{5},
+			{9},
+			{13},
+		},
+	}
+
+	t.Run("", func(t *testing.T) {
+		for i := 0; i < len(inputs); i++ {
+			input := inputs[i]
+			MatrixClockwisely(input, len(input), len(input[0]))
+		}
+	})
+}
