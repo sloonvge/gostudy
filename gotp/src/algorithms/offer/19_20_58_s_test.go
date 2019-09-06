@@ -1,6 +1,7 @@
 package offer
 
 import (
+	"fmt"
 	"reflect"
 	"regexp"
 	"testing"
@@ -87,5 +88,76 @@ func TestIsNumeric(t *testing.T) {
 				t.Fatalf("fail %d, want:%v,got:%v\n", i, wants[i], got)
 			}
 		}
+	})
+}
+
+// 58
+func ReverseSentence(data string) string{
+	if data == "" {
+		return data
+	}
+
+	bytes := []byte(data)
+	var begin, end int
+	begin = 0
+	end = len(bytes) - 1
+	reverse(bytes, begin, end)
+	begin = 0
+	for i, b := range bytes {
+		if b != ' ' {
+			continue
+		}
+		if i > 1{
+			end = i - 1
+			reverse(bytes, begin, end)
+		}
+		begin = i + 1
+	}
+
+	return string(bytes)
+}
+func reverse(b []byte, i, j int) {
+	if i < 0 || j >= len(b) {
+		return
+	}
+	for i < j {
+		b[i], b[j] = b[j], b[i]
+		i++
+		j--
+	}
+}
+
+func TestReverseSentence(t *testing.T) {
+
+	t.Run("1", func(t *testing.T) {
+		fmt.Printf("%q\n", ReverseSentence("I am a student."))
+		fmt.Printf("%q\n", ReverseSentence(" I am a student."))
+		fmt.Printf("%q\n", ReverseSentence("I am a student. "))
+		fmt.Printf("%q\n", ReverseSentence("    "))
+	})
+}
+
+func LeftRotateString(s string, n int) string {
+	if s == "" {
+		return s
+	}
+	bytes := []byte(s)
+	l := len(bytes)
+	if n > 0 && l > 0 && n < l{
+		reverse(bytes, 0, n - 1)
+		reverse(bytes, n, l - 1)
+		reverse(bytes, 0, l - 1)
+	}
+
+	return string(bytes)
+}
+
+func TestLeftRotateString(t *testing.T) {
+
+	t.Run("1", func(t *testing.T) {
+		fmt.Printf("%q\n", LeftRotateString("world", 0))
+		fmt.Printf("%q\n", LeftRotateString("world", 1))
+		fmt.Printf("%q\n", LeftRotateString("world", 4))
+		fmt.Printf("%q\n", LeftRotateString("world", 6))
 	})
 }

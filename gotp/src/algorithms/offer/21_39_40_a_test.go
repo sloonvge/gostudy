@@ -1,6 +1,7 @@
 package offer
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -191,4 +192,63 @@ func TestGetLeastNumbers(t *testing.T) {
 	// 		}
 	// 	}
 	// })
+}
+
+// 57
+func FindNumbersWithSum(a []int, k int) {
+	i := 0
+	j := len(a) - 1
+	for i < j {
+		s := a[i] + a[j]
+		if s < k {
+			i++
+		} else if s > k {
+			j--
+		} else {
+			fmt.Println(a[i], a[j])
+			return
+		}
+	}
+	fmt.Println("not found")
+}
+func TestFindNumbersWithSum(t *testing.T) {
+	inputs := [][]int{
+		{1, 2, 3, 2, 2},
+	}
+	t.Run("1", func(t *testing.T) {
+		for i := 0; i < len(inputs); i++ {
+			FindNumbersWithSum(inputs[i], 4)
+		}
+	})
+}
+
+func FindContinuousSequence(sum int)  {
+	if sum < 3 {
+		return
+	}
+	small := 1
+	big := 2
+	mid := (sum + 1) >> 1
+	curSum := small + big
+	for small < mid {
+		if curSum == sum {
+			for i := small; i <= big; i++ {
+				fmt.Printf("%d ", i)
+			}
+			fmt.Println()
+		}
+		if curSum > sum {
+			curSum -= small
+			small++
+			continue
+		}
+		big++
+		curSum += big
+	}
+}
+func TestFindContinuousSequence(t *testing.T) {
+
+	t.Run("1", func(t *testing.T) {
+		FindContinuousSequence(15)
+	})
 }

@@ -294,3 +294,163 @@ func TestMatrixClockwisely(t *testing.T) {
 		}
 	})
 }
+
+// 54
+func KthNode(root *BinaryTreeNode, k int) *BinaryTreeNode{
+	return kthNode(root, &k)
+}
+func kthNode(root *BinaryTreeNode, k *int) *BinaryTreeNode{
+	var target *BinaryTreeNode
+	if root == nil {
+		return nil
+	}
+
+
+	target = kthNode(root.left, k)
+	if target == nil {
+		if *k == 1 {
+			target = root
+		}
+		*k--
+	}
+	if target == nil {
+		target = kthNode(root.right, k)
+	}
+
+	// if root.left != nil {
+	// 	target = kthNode(root.left, k)
+	// }
+	// if target == nil {
+	// 	if *k == 1 {
+	// 		target = root
+	// 	}
+	// 	*k--
+	// }
+	//
+	// if target == nil && root.right != nil {
+	// 	target = kthNode(root.right, k)
+	// }
+	return target
+}
+
+func TestKthNode(t *testing.T) {
+	t.Run("1", func(t *testing.T) {
+		a4 := &BinaryTreeNode{
+			value:1,
+		}
+		a3 := &BinaryTreeNode{
+			value:4,
+		}
+		a2 := &BinaryTreeNode{
+			value:2,
+			left:a4,
+		}
+		a1 := &BinaryTreeNode{
+			value:3,
+			left:a2,
+			right:a3,
+		}
+		node := KthNode(a1, 4)
+		fmt.Println(*node)
+	})
+}
+
+// 55
+func TreeDepth(root *BinaryTreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	l := TreeDepth(root.left)
+	r := TreeDepth(root.right)
+	if l > r {
+		return l + 1
+	}
+	return r + 1
+}
+
+func TestTreeDepth(t *testing.T) {
+	t.Run("1", func(t *testing.T) {
+		a4 := &BinaryTreeNode{
+			value:1,
+		}
+		a3 := &BinaryTreeNode{
+			value:4,
+		}
+		a2 := &BinaryTreeNode{
+			value:2,
+			left:a4,
+		}
+		a1 := &BinaryTreeNode{
+			value:3,
+			left:a2,
+			right:a3,
+		}
+		d := TreeDepth(a1)
+		fmt.Println(d)
+	})
+}
+
+func IsBalanced(root *BinaryTreeNode) bool {
+	if root == nil {
+		return true
+	}
+	l := TreeDepth(root.left)
+	r := TreeDepth(root.right)
+	diff := l - r
+	if diff > 1 || diff < -1 {
+		return false
+	}
+
+	return IsBalanced(root.left) && IsBalanced(root.right)
+}
+func IsBalanced2(root *BinaryTreeNode) bool {
+	depth := 0
+	return isBalanced2(root, &depth)
+}
+func isBalanced2(root *BinaryTreeNode, depth *int) bool{
+	if root == nil {
+		*depth = 0
+		return true
+	}
+	var left, right int
+	if isBalanced2(root.left, &left) && isBalanced2(root.right, &right) {
+		diff := left - right
+		if diff <= 1 || diff >= -1 {
+			if left > right {
+				*depth += left
+			} else {
+				*depth += right
+			}
+			return true
+		}
+	}
+
+	return false
+}
+func TestIsBalanced(t *testing.T) {
+	a4 := &BinaryTreeNode{
+		value:1,
+	}
+	a3 := &BinaryTreeNode{
+		value:4,
+	}
+	a2 := &BinaryTreeNode{
+		value:2,
+		left:a4,
+	}
+	a1 := &BinaryTreeNode{
+		value:3,
+		left:a2,
+		right:a3,
+	}
+	t.Run("1", func(t *testing.T) {
+		d := IsBalanced(a1)
+		fmt.Println(d)
+	})
+	t.Run("2", func(t *testing.T) {
+		d := IsBalanced2(a1)
+		fmt.Println(d)
+	})
+}
+
