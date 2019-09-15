@@ -21,9 +21,11 @@ type Pet interface {
 
 
 func main() {
-	dog := Dog{"little pig"}
-	var pet Pet = &dog
-	dog.SetName("monster")
-	fmt.Println(pet.Name())
+	// dog := Dog{"little pig"}
+	// var pet Pet = &dog
+	// dog.SetName("monster")
+	// fmt.Println(pet.Name())
+	fmt.Printf("%x\n", uint8(255))
+
 
 }

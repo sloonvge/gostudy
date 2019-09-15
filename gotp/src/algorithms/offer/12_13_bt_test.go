@@ -24,6 +24,23 @@ func TestGenerateAll(t *testing.T) {
 	GenerateAll(make([]byte, 6))
 }
 
+// 全排列 ABC
+func GenerateAll2(b []byte, i, j int) {
+	if i == j {
+		fmt.Println(string(b))
+	} else {
+		for k := i; k <= j; k++ {
+			b[i], b[k] = b[k], b[i]
+			GenerateAll2(b, i + 1, j)
+			b[i], b[k] = b[k], b[i]
+		}
+	}
+}
+func TestGenerateAll2(t *testing.T) {
+	GenerateAll2([]byte("ABC"), 0, 2)
+}
+
+
 // 12
 func HasPath(mat [][]string, rows, cols int, s string) bool {
 	if len(mat) == 0 || rows < 1 || cols < 1 ||
