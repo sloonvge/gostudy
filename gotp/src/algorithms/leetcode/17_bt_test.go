@@ -91,28 +91,3 @@ func TestExist(t *testing.T)  {
 	}
 	exist(board, "ASADFB")
 }
-
-// 62
-func uniquePaths(m int, n int) int {
-	nPath := 0
-	backtrace(m - 1, n - 1, 0, 0, &nPath)
-	fmt.Println(nPath)
-	return nPath
-}
-
-func backtrace(rows, cols, row, col int, nPath *int) {
-	if row == rows && col == cols {
-		*nPath++
-		return
-	}
-	if row < 0 || row > rows ||
-		col < 0 || col > cols {
-		return
-	}
-	backtrace(rows, cols, row + 1, col, nPath)
-	backtrace(rows, cols, row, col + 1, nPath)
-}
-
-func TestUniquePaths(t *testing.T)  {
-	uniquePaths(51, 9)
-}

@@ -9,6 +9,7 @@ type BinaryTreeNode struct {
 	value int
 	left *BinaryTreeNode
 	right *BinaryTreeNode
+	parent *BinaryTreeNode
 }
 
 func GenerateBinaryTree(a []int) *BinaryTreeNode{
@@ -63,6 +64,74 @@ func EqualValueBinaryTree(root1, root2 *BinaryTreeNode) (equal bool){
 	return equal && EqualValueBinaryTree(root1.left, root2.left) &&
 		EqualValueBinaryTree(root1.right, root2.right)
 }
+
+// 7
+func RebuildBinaryTree(pre, in []int) *BinaryTreeNode{
+	return rebuildBinaryTree(pre, in, 0, len(pre) - 1, 0, len(pre) - 1)
+}
+func rebuildBinaryTree(pre, in []int, s1, e1, s2, e2 int) *BinaryTreeNode {
+	root := &BinaryTreeNode{}
+	root.value = pre[s1]
+
+	if s1 == e1 {
+		if s2 == e2 && pre[s1] == in[s2]{
+			return root
+		} else {
+			panic("invalid input")
+		}
+	}
+
+	i := s2
+	for i <= e2 && in[i] != pre[s1] {
+		i++
+	}
+	if i == e2 && in[i] != pre[s1] {
+		panic("invalid input")
+	}
+	leftLength := i - s2
+	leftPreorderEnd := s1 + leftLength
+	if leftLength > 0 {
+		root.left = rebuildBinaryTree(pre, in, s1 + 1, leftPreorderEnd, s2, i - 1)
+	}
+	if leftLength < e1 - s1 {
+		root.right = rebuildBinaryTree(pre, in, leftPreorderEnd + 1, e1, i + 1, e2)
+	}
+
+	return root
+
+}
+
+func TestRebuildBinaryTree(t *testing.T) {
+	head := RebuildBinaryTree([]int{1,2,4,7,3,5,6,8},
+		[]int{4,7,2,1,5,3,8,6})
+	PrintBinaryTreeFront(head)
+	fmt.Println()
+	PrintBinaryTreeMid(head)
+}
+
+// 8
+func GetNext(node *BinaryTreeNode) *BinaryTreeNode {
+	next := &BinaryTreeNode{}
+	if node.right != nil {
+		right := node.right
+		for right.left != nil {
+			right = right.left
+		}
+
+		next = right
+	} else if node.parent != nil {
+		current := node
+		parent := node.parent
+		for parent != nil && current == parent.right {
+			current = parent
+			parent = parent.parent
+		}
+		next = parent
+	}
+
+	return next
+}
+
 
 // 26
 func HasSubtree(root1, root2 *BinaryTreeNode) bool {

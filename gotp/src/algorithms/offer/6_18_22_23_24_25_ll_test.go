@@ -87,6 +87,20 @@ func EqualOneValue(head1, head2 *ListNode) bool {
 	return equal
 }
 
+// 6
+func PrintListReversingly(head *ListNode) {
+	if head == nil {
+		return
+	}
+	PrintListReversingly(head.next)
+	fmt.Println(head.value)
+}
+
+func TestPrintListReversingly(t *testing.T) {
+	head := GenerateListNode([]int{1,3,5,7})
+	PrintListReversingly(head)
+}
+
 // 18
 func DeleteNode(head *ListNode, node *ListNode) (ok bool) {
 	if head == nil || node == nil {

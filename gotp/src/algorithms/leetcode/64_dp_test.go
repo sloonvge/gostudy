@@ -421,3 +421,353 @@ func coinChange(coins []int, amount int) int {
 	}
 	return dp[amount]
 }
+
+// 221
+func maximalSquare1(matrix [][]byte) int {
+	max := 0
+
+	m := len(matrix)
+	if m == 0 {
+		return 0
+	}
+	n := len(matrix[0])
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if matrix[i][j] == '1' {
+				area := 1
+				all := true
+				for area + i < m && area + j < n && all{
+					for k := i; k <= i + area; k++ {
+						if matrix[k][j + area] != '1' {
+							all = false
+							break
+						}
+					}
+					if all {
+						for k := j; k <= j + area; k++ {
+							if matrix[i + area][k] != '1' {
+								all = false
+								break
+							}
+						}
+					}
+					if all {
+						area++
+					}
+				}
+				if area > max {
+					max = area
+				}
+			}
+		}
+	}
+
+	return max * max
+}
+
+func maximalSquare2(matrix [][]byte) int {
+	maxSquareLen := 0
+	rows := len(matrix)
+	if rows == 0 {
+		return 0
+	}
+	cols := len(matrix[0])
+	dp := make([][]int, rows + 1)
+	for i := 0; i <= rows; i++ {
+		dp[i] = make([]int, cols + 1)
+	}
+	min := func(a, b, c int) int{
+		m := a
+		if m > b {
+			m = b
+		}
+		if m > c {
+			m = c
+		}
+
+		return m
+	}
+	for i := 1; i <= rows; i++ {
+		for j := 1; j <= cols; j++ {
+			if matrix[i - 1][j - 1] == '1' {
+				dp[i][j] = min(dp[i - 1][j], dp[i - 1][j - 1], dp[i][j - 1]) + 1
+				if dp[i][j] > maxSquareLen {
+					maxSquareLen = dp[i][j]
+				}
+			}
+		}
+	}
+
+	return maxSquareLen * maxSquareLen
+}
+
+func maximalSquare(matrix [][]byte) int {
+	maxSquareLen := 0
+	rows := len(matrix)
+	if rows == 0 {
+		return 0
+	}
+	cols := len(matrix[0])
+	dp := make([]int, cols + 1)
+	min := func(a, b, c int) int{
+		m := a
+		if m > b {
+			m = b
+		}
+		if m > c {
+			m = c
+		}
+
+		return m
+	}
+	prev := 0
+	for i := 1; i <= rows; i++ {
+		for j := 1; j <= cols; j++ {
+			temp := dp[j]
+			if matrix[i - 1][j - 1] == '1' {
+				dp[j] = min(dp[j], prev, dp[j - 1]) + 1
+				if dp[j] > maxSquareLen {
+					maxSquareLen = dp[j]
+				}
+			} else {
+				dp[j] = 0
+			}
+			prev = temp
+		}
+	}
+
+	return maxSquareLen * maxSquareLen
+}
+
+// 300
+func lengthOfLIS(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+	max := func(a, b int) int {
+		if a > b {
+		return a
+	}
+		return b
+	}
+	n := len(nums)
+	dp := make([]int, n)
+	for i := 0; i < n;  i++ {
+		dp[i] = 1
+	}
+	for i := 1; i < n; i++ {
+		for j := 0; j < i; j++ {
+			if nums[i] > nums[j] {
+				dp[i] = max(dp[i], dp[j] + 1)
+			}
+		}
+	}
+	answer := 0
+	for _, n := range dp {
+		answer = max(answer, n)
+	}
+
+	return answer
+}
+
+
+// 416
+// func canPartition1(nums []int) bool {
+// 	return helper(nums, 0, 0, 0)
+// }
+// func helper(nums []int, curpos, taken, noTaken int) bool {
+// 	if curpos == len(nums) {
+// 		if taken == noTaken {
+// 			return true
+// 		}
+// 		return false
+// 	}
+// 	return helper(nums, curpos + 1, taken + nums[curpos], noTaken) ||
+// 		helper(nums, curpos + 1, taken, noTaken + nums[curpos])
+// }
+
+func canPartition2(nums []int) bool {
+	sum := 0
+	for _, n := range nums {
+		sum += n
+	}
+	if sum & 1 == 1 {
+		return false
+	}
+	sum /= 2
+
+	n := len(nums)
+	dp := make([][]bool, n + 1)
+	for i := 0; i < n + 1; i++ {
+		dp[i] = make([]bool, sum + 1)
+	}
+
+	dp[0][0] = true
+	for i := 1; i < n + 1; i++ {
+		dp[i][0] = true
+	}
+	for j := 1; j < sum + 1; j++ {
+		dp[0][j] = false
+	}
+
+	for i := 1; i < n + 1; i++ {
+		for j := 1; j < sum + 1; j++ {
+			dp[i][j] = dp[i - 1][j]
+			if j > nums[i] {
+				dp[i][j] = dp[i][j] || dp[i - 1][j - nums[i]]
+			}
+		}
+	}
+
+	return dp[n][sum]
+}
+
+func canPartition(nums []int) bool {
+	sum := 0
+	for _, n := range nums {
+		sum += n
+	}
+	if sum & 1 == 1 {
+		return false
+	}
+	sum /= 2
+
+	dp := make([]bool, sum + 1)
+	dp[0] = true
+	for _, n := range nums {
+		for i := sum; i >= sum; i-- {
+			dp[i] = dp[i] || dp[i-n]
+		}
+	}
+
+	return dp[sum]
+}
+
+// 279
+func numSquares(n int) int {
+	dp := make([]int, n + 1)
+	dp[0] = 0
+	for i := 1; i <= n; i++ {
+		min := math.MaxInt64
+		j := 1
+		for i - j * j >= 0 {
+			v := dp[i - j * j] + 1
+			if v < min {
+				min = v
+			}
+			j++
+		}
+		dp[i] = min
+	}
+
+	return dp[n]
+}
+
+// 309 Best Time to Buy and Sell Stock with Cooldown
+func maxProfit(prices []int) int {
+	max := func(a, b int) int {
+		if a > b {
+			return a
+		}
+		return b
+	}
+	var buy, rest, sell int
+	buy = math.MinInt64
+	for _, p := range prices {
+		prevBuy := buy
+		buy = max(rest - p, buy)
+		rest = max(sell, rest)
+		sell = prevBuy + p
+	}
+
+	return max(sell, rest)
+}
+
+// 62
+func uniquePaths1(m int, n int) int {
+	dp := make([][]int, m)
+	for i := 0; i < m; i++ {
+		dp[i] = make([]int, n)
+	}
+	for i := 0; i < m; i++ {
+		dp[i][0] = 1
+	}
+	for i := 0; i < n; i++ {
+		dp[0][i] = 1
+	}
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if i >= 1 && j >= 1 {
+				dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+			}
+		}
+	}
+
+	return dp[m - 1][n - 1]
+}
+
+func uniquePaths(m int, n int) int {
+	dp := make([]int, n)
+	for i := 0; i < n; i++ {
+		dp[i] = 1
+	}
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if i >= 1 && j >= 1 {
+				dp[j] = dp[j - 1] + dp[j]
+			}
+		}
+	}
+
+	return dp[n - 1]
+}
+
+// 198 House Robber
+func rob1(nums []int) int {
+	n := len(nums)
+	if n == 0 {
+		return 0
+	}
+	robs := make([]int, n)
+	noRobs := make([]int, n)
+	max := func(a, b int) int {
+		if a > b {
+			return a
+		}
+		return b
+	}
+	robs[0] = nums[0]
+	for i := 1; i < n; i++ {
+		robs[i] = noRobs[i - 1] + nums[i]
+		noRobs[i] = max(noRobs[i - 1], robs[i - 1])
+	}
+
+	return max(robs[n - 1], noRobs[n - 1])
+}
+
+func rob(nums []int) int {
+	n := len(nums)
+	if n == 0 {
+		return 0
+	}
+	max := func(a, b int) int {
+		if a > b {
+			return a
+		}
+		return b
+	}
+	robs := nums[0]
+	noRobs := 0
+	for i := 1; i < n; i++ {
+		prevRobs := robs
+		robs = noRobs + nums[i]
+		noRobs = max(noRobs, prevRobs)
+	}
+
+	return max(robs, noRobs)
+}
+
+
+func TestT(t *testing.T) {
+	fmt.Println(rob([]int{7,1}))
+}
