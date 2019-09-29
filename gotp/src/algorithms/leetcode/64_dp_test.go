@@ -767,7 +767,47 @@ func rob(nums []int) int {
 	return max(robs, noRobs)
 }
 
+// 60
+func canJump1(nums []int) bool {
+	if len(nums) == 0 {
+		return false
+	}
+	n := len(nums)
+	dp := make([]bool, n + 1)
+	dp[1] = true
+	for i := 1; i < n + 1; i++ {
+		for j := 1; j < i; j++ {
+			flag := true
+			if nums[j - 1] < i - j {
+				flag = false
+			}
+			dp[i] = dp[i] || flag && dp[j]
+			fmt.Println(dp)
+		}
+	}
+
+	return dp[n]
+}
+
+func canJump(nums []int) bool {
+	if len(nums) == 0 {
+		return false
+	}
+	max := func(a, b int) int {
+		if a > b {
+			return a
+		}
+		return b
+	}
+	n := len(nums)
+	i := 0
+	for reach := 0; i < n && i < reach; i++ {
+		reach = max(i + nums[i], reach)
+	}
+
+	return i == n
+}
 
 func TestT(t *testing.T) {
-	fmt.Println(rob([]int{7,1}))
+	fmt.Println(canJump([]int{0}))
 }

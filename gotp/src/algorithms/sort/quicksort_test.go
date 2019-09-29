@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 	"sort"
 	"testing"
 )
@@ -129,11 +128,12 @@ func partion(a []int, start, end int) int {
 }
 
 func TestQuickSort(t *testing.T) {
-	N := 5
-	a := make([]int, N)
-	for i := 0; i < N; i++ {
-		a[i] = rand.Intn(100)
-	}
+	// N := 5
+	// a := make([]int, N)
+	// for i := 0; i < N; i++ {
+	// 	a[i] = rand.Intn(100)
+	// }
+	a := []int{1,1,2,2,1}
 
 	fmt.Printf("origin:%v\n", a)
 	QuickSort(a)
