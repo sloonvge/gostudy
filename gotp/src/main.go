@@ -29,14 +29,33 @@ func main() {
 	// dog.SetName("monster")
 	// fmt.Println(pet.Name())
 	// fmt.Printf("%x\n", uint8(255))
-	fmt.Println(1)
-	ch := make(chan int, 1)
-	go foo(ch)
-	fmt.Println(2)
-	for i := range ch {
-		fmt.Println(i)
-	}
-	close(ch)
+	// fmt.Println(1)
+	// ch := make(chan int, 1)
+	// go foo(ch)
+	// fmt.Println(2)
+	// for i := range ch {
+	// 	fmt.Println(i)
+	// }
+	// close(ch)
+
+	/*
+	   先defer的后执行
+	   recover后输出panic中的信息
+	*/
+
+	defer func() {
+		if err := recover(); err != nil {
+
+			fmt.Print(err)
+		} else {
+			fmt.Print("no")
+		}
+
+	}()
+	defer func() {
+			panic("1111111111111")
+		}()
+	panic("22222222222")
 }
 
 func foo(ch chan int)  {
