@@ -92,29 +92,52 @@ func TestIsNumeric(t *testing.T) {
 }
 
 // 58
-func ReverseSentence(data string) string{
-	if data == "" {
-		return data
+// func ReverseSentence(data string) string{
+// 	if data == "" {
+// 		return data
+// 	}
+//
+// 	bytes := []byte(data)
+// 	var begin, end int
+// 	begin = 0
+// 	end = len(bytes) - 1
+// 	reverse(bytes, begin, end)
+// 	begin = 0
+// 	for i, b := range bytes {
+// 		if b != ' ' {
+// 			continue
+// 		}
+// 		if i > 1{
+// 			end = i - 1
+// 			reverse(bytes, begin, end)
+// 		}
+// 		begin = i + 1
+// 	}
+//
+// 	return string(bytes)
+// }
+func ReverseSentence(s string) string {
+	if s == "" {
+		return ""
 	}
-
-	bytes := []byte(data)
+	var ans []byte
+	ans = []byte(s)
+	reverse(ans, 0, len(s) - 1)
 	var begin, end int
-	begin = 0
-	end = len(bytes) - 1
-	reverse(bytes, begin, end)
-	begin = 0
-	for i, b := range bytes {
-		if b != ' ' {
-			continue
+	for begin < len(s) {
+		if ans[begin] == ' ' {
+			begin++
+			end++
+		} else if end == len(s) || ans[end] == ' ' {
+			reverse(ans, begin, end - 1)
+			end++
+			begin = end
+		} else {
+			end++
 		}
-		if i > 1{
-			end = i - 1
-			reverse(bytes, begin, end)
-		}
-		begin = i + 1
 	}
 
-	return string(bytes)
+	return string(ans)
 }
 func reverse(b []byte, i, j int) {
 	if i < 0 || j >= len(b) {

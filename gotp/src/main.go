@@ -42,20 +42,24 @@ func main() {
 	   先defer的后执行
 	   recover后输出panic中的信息
 	*/
+	//
+	// defer func() {
+	// 	if err := recover(); err != nil {
+	//
+	// 		fmt.Print(err)
+	// 	} else {
+	// 		fmt.Print("no")
+	// 	}
+	//
+	// }()
+	// defer func() {
+	// 		panic("1111111111111")
+	// 	}()
+	// panic("22222222222")
 
-	defer func() {
-		if err := recover(); err != nil {
-
-			fmt.Print(err)
-		} else {
-			fmt.Print("no")
-		}
-
-	}()
-	defer func() {
-			panic("1111111111111")
-		}()
-	panic("22222222222")
+	slice := make([]int, 5, 10) // 长度为5，容量为10
+	slice[2] = 2 // 索引为2的元素赋值为2
+	fmt.Println(slice)
 }
 
 func foo(ch chan int)  {

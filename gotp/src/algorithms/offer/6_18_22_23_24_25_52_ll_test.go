@@ -469,3 +469,33 @@ func TestMergeSortedLinkedList(t *testing.T) {
 		}
 	})
 }
+
+// 52
+func FindFirstCommonNode(head1, head2 *ListNode) *ListNode {
+	len1 := 0
+	len2 := 0
+	for node := head1; node != nil ; node = node.next {
+		len1++
+	}
+	for node := head2; node != nil; node = node.next {
+		len2++
+	}
+	var longList, shortList *ListNode
+	longList = head2
+	shortList = head1
+	diff := len2 - len1
+	if len1 > len2 {
+		longList = head1
+		shortList = head2
+		diff = len1 - len2
+	}
+
+	for i := 0; i < diff; i++ {
+		longList = longList.next
+	}
+	for longList != nil && shortList != nil && longList != shortList {
+		shortList = shortList.next
+		longList = longList.next
+	}
+	return longList
+}

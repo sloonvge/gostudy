@@ -45,37 +45,71 @@ import (
 // 	return c
 // }
 
-func MergeSort(a []int) []int{
-	if len(a) <= 1 {
+// func MergeSort(a []int) []int{
+// 	if len(a) <= 1 {
+// 		return a
+// 	}
+// 	n := len(a)
+// 	b := make([]int, n >> 1)
+// 	c := make([]int, n-n >> 1)
+//
+// 	copy(b, a[:n>>1])
+// 	copy(c, a[n>>1:])
+// 	return merge(MergeSort(b), MergeSort(c))
+// }
+// func merge(b, c []int) []int{
+// 	a := make([]int, len(b) + len(c))
+// 	var i, j int
+// 	for k := 0; k < len(a); k++ {
+// 		if i >= len(b) {
+// 			a[k] = c[j]
+// 			j++
+// 		} else if j >= len(c) {
+// 			a[k] = b[i]
+// 			i++
+// 		} else if b[i] < c[j] {
+// 			a[k] = b[i]
+// 			i++
+// 		} else {
+// 			a[k] = c[j]
+// 			j++
+// 		}
+// 	}
+// 	return a
+// }
+
+func MergeSort(a []int) []int {
+	if len(a) < 2 {
 		return a
 	}
 	n := len(a)
 	b := make([]int, n >> 1)
-	c := make([]int, n-n >> 1)
-
-	copy(b, a[:n>>1])
-	copy(c, a[n>>1:])
+	c := make([]int, n - n >> 1)
+	copy(b, a[:n >> 1])
+	copy(c, a[n >> 1:])
 	return merge(MergeSort(b), MergeSort(c))
 }
-func merge(b, c []int) []int{
-	a := make([]int, len(b) + len(c))
-	var i, j int
-	for k := 0; k < len(a); k++ {
-		if i >= len(b) {
-			a[k] = c[j]
+func merge(b, c []int) (a []int) {
+	a = make([]int, len(b) + len(c))
+	j := 0
+	k := 0
+	for i := 0; i < len(a); i++ {
+		if j >= len(b) {
+			a[i] = c[k]
+			k++
+		} else if k >= len(c) {
+			a[i] = b[j]
 			j++
-		} else if j >= len(c) {
-			a[k] = b[i]
-			i++
-		} else if b[i] < c[j] {
-			a[k] = b[i]
-			i++
+		} else if b[j] < c[k] {
+			a[i] = b[j]
+			j++
 		} else {
-			a[k] = c[j]
-			j++
+			a[i] = c[k]
+			k++
 		}
 	}
-	return a
+
+	return
 }
 
 func TestMergeSort(t *testing.T) {
@@ -85,16 +119,9 @@ func TestMergeSort(t *testing.T) {
 		a[i] = rand.Intn(100)
 	}
 
-	fmt.Printf("origin:%v\n", a)
+	fmt.Printf("orig: %v\n", a)
 	a = MergeSort(a)
-	fmt.Printf("sort:%v\n", a)
+	fmt.Printf("sort: %v\n", a)
 	sort.Ints(a)
-	t.Run("", func(t *testing.T) {
-		a := []int{0, 1, 2, 3, 4}
-		b := []int{5, 6}
-		copy(b, a[:2])
-		fmt.Println(b)
-		a[0] = -1
-		fmt.Println(b)
-	})
+	fmt.Println("base:", a)
 }

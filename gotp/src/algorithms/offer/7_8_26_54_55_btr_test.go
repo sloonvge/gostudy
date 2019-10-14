@@ -386,19 +386,6 @@ func kthNode(root *BinaryTreeNode, k *int) *BinaryTreeNode{
 		target = kthNode(root.right, k)
 	}
 
-	// if root.left != nil {
-	// 	target = kthNode(root.left, k)
-	// }
-	// if target == nil {
-	// 	if *k == 1 {
-	// 		target = root
-	// 	}
-	// 	*k--
-	// }
-	//
-	// if target == nil && root.right != nil {
-	// 	target = kthNode(root.right, k)
-	// }
 	return target
 }
 

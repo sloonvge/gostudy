@@ -254,19 +254,37 @@ func TestFindContinuousSequence(t *testing.T) {
 }
 
 // 63
+// func MaxDiff(numbers []int) {
+// 	if len(numbers) < 2 {
+// 		return
+// 	}
+// 	min := numbers[0]
+// 	maxDiff := numbers[1] - min
+// 	for i := 2; i < len(numbers); i++ {
+// 		if numbers[i - 1] < min {
+// 			min = numbers[i - 1]
+// 		}
+// 		currentDiff := numbers[i] - min
+// 		if currentDiff > maxDiff {
+// 			maxDiff = currentDiff
+// 		}
+// 	}
+// 	fmt.Println(maxDiff)
+// }
+
 func MaxDiff(numbers []int) {
 	if len(numbers) < 2 {
 		return
 	}
+	maxDiff := 0
 	min := numbers[0]
-	maxDiff := numbers[1] - min
-	for i := 2; i < len(numbers); i++ {
-		if numbers[i - 1] < min {
-			min = numbers[i - 1]
+	for i := 1; i < len(numbers); i++ {
+		cur := numbers[i] - min
+		if cur > maxDiff {
+			maxDiff = cur
 		}
-		currentDiff := numbers[i] - min
-		if currentDiff > maxDiff {
-			maxDiff = currentDiff
+		if numbers[i] < min {
+			min = numbers[i]
 		}
 	}
 	fmt.Println(maxDiff)

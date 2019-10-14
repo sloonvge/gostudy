@@ -91,38 +91,72 @@ import (
 // 	return j
 // }
 
-func QuickSort(a []int) {
-	if len(a) == 0 {
-		return
+// func QuickSort(a []int) {
+// 	if len(a) == 0 {
+// 		return
+// 	}
+// 	quickSort(a, 0, len(a) - 1)
+// }
+// func quickSort(a []int, i, j int) {
+// 	if i >= j {
+// 		return
+// 	}
+// 	k := partion(a, i, j)
+// 	quickSort(a, 0, k - 1)
+// 	quickSort(a, k + 1, j)
+// }
+// func partion(a []int, start, end int) int {
+// 	k := a[start]
+// 	var i, j int
+// 	i = start + 1
+// 	j = end
+// 	for {
+// 		for ; i < end && a[i] <= k; i++{
+// 		}
+// 		for ; j > start && a[j] >= k; j--{
+// 		}
+// 		if i >= j {
+// 			break
+// 		}
+// 		a[i], a[j] = a[j], a[i]
+// 		i++
+// 		j--
+// 	}
+// 	a[start], a[j] = a[j], a[start]
+//
+// 	return j
+// }
+
+func QuickSort(a []int) []int {
+	if len(a) < 2 {
+		return a
 	}
 	quickSort(a, 0, len(a) - 1)
+	return a
 }
 func quickSort(a []int, i, j int) {
 	if i >= j {
 		return
 	}
-	k := partion(a, i, j)
-	quickSort(a, 0, k - 1)
-	quickSort(a, k + 1, j)
+	p := partition(a, i, j)
+	quickSort(a, i, p - 1)
+	quickSort(a, p + 1, j)
 }
-func partion(a []int, start, end int) int {
-	k := a[start]
-	var i, j int
-	i = start + 1
-	j = end
+func partition(a []int, lo, hi int) int {
+	k := a[lo]
+	i := lo + 1
+	j := hi
 	for {
-		for ; i < end && a[i] <= k; i++{
+		for ; i < hi && a[i] <= k; i++ {
 		}
-		for ; j > start && a[j] >= k; j--{
+		for ; j > lo && a[j] >= k; j-- {
 		}
-		if i >= j {
-			break
-		}
+		if i >= j { break }
 		a[i], a[j] = a[j], a[i]
 		i++
 		j--
 	}
-	a[start], a[j] = a[j], a[start]
+	a[j], a[lo] = a[lo], a[j]
 
 	return j
 }

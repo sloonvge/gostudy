@@ -219,13 +219,36 @@ func TestNumbersOnlyOneAppearOnce(t *testing.T) {
 }
 
 // 65
-func Add(num1, num2 int) int {
-	n1 := num1 ^ num2
-	n2 := num1 & num2 << 1
-	if n2 == 0 {
-		return n1
+// func Add(num1, num2 int) int {
+// 	n1 := num1 ^ num2
+// 	n2 := num1 & num2 << 1
+// 	if n2 == 0 {
+// 		return n1
+// 	}
+// 	return Add(n1, n2)
+// }
+func Add1(num1, num2 int) int {
+	xor := num1 ^ num2
+	and := num1 & num2 << 1
+	if and == 0 {
+		return xor
 	}
-	return Add(n1, n2)
+	return Add(xor, and)
+}
+
+func Add(num1, num2 int) int {
+	var sum, carry int
+	for {
+		sum = num1 ^ num2
+		carry = num1 & num2 << 1
+
+		num1 = sum
+		num2 = carry
+		if carry == 0 {
+			break
+		}
+	}
+	return num1
 }
 
 func TestAdd(t *testing.T) {
